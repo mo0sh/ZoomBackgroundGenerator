@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Zoom Virtual Background Generator</title>
+    <meta charset="utf-8" />
+    <script src="js/canvas2image.js"></script>
+    <script src="js/xsl4fab.js"></script>
+    <script>/*<![CDATA[*/try{Typekit.load({ async: false });}catch(e){}/*]]>*/</script>
+    <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+    <div class="doc">
+        <h1>Zoom Virtual Placard Generator</h1>
+
+        <canvas width="1920" height="1080" id="cvshd"></canvas>
+        <canvas width="1600" height="1200" id="cvs"></canvas>
+
+        <p>Use this generator to create a personalized virtual background "name placard" to use when you attend Johnson online classes or represent Johnson at a virtual corporate briefing, conference, or event.</p>
+        <p>Ithaca Residential MBA students are encouraged to include their cohort identity (once it is assigned), but should use the standard Johnson option (with no cohort) for conferences and corporate events.</p>
+
+        <h2>Create Your Background</h2>
+        <ul>
+            <li>Enter your name (using your preferred first name is fine)</li>
+            <li>Indicate your pronouns.* <a href="https://diversity.cornell.edu/our-community/staff-resources/lgbtq-staff-faculty/gender-inclusive-pronouns" target="_blank">Learn why this is important</a></li>
+            <li>Add the image as a <a href="https://support.zoom.us/hc/en-us/articles/210707503-Virtual-Background" target="_blank">virtual background in Zoom</a></li>
+        </ul>
+
+        <div id="inputContainer">
+            <div id="formContainer">
+                <table>
+                    <tr>
+                        <td><label for="first">First Name:</label></td>
+                        <td><input type="text" id="first" placeholder="firstname" tabindex="1"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="last">Last Name:</label></td>
+                        <td><input type="text" id="last" placeholder="lastname" tabindex="2"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="pronouns">Pronouns:</label></td>
+                        <td>
+                            <select id="pronouns" tabindex="3">
+                                <option value="" label="None"></option>
+                                <option value="She/Her">She/Her</option>
+                                <option value="He/Him">He/Him</option>
+                                <option value="They/Them">They/Them</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="school">School:</label></td>
+                        <td>
+                            <select id="school" tabindex="4">
+                                <option value="">-- Select a School --</option>
+                                <option value="DYSON">Dyson</option>
+                                <option value="JOHNSON">Johnson</option>
+                                <option value="SHA">SHA</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="cohortRow">
+                        <td><label for="cohort">Cohort:</label></td>
+                        <td>
+                            <select id="cohort" tabindex="4">
+                                <option value="none">-- None --</option>
+                                <option value="#70B247">Keuka</option>
+                                <option value="#FED76E">Honeoye</option>
+                                <option value="#64509E">Skaneateles</option>
+                                <option value="#FDACAA">Otisco</option>
+                                <option value="#000000">Conesus</option>
+                                <option value="#1171BD">Owasco</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="controlsContainer">
+                <button id="createimage" tabindex="5">Save Image</button><br /><br />
+                <div id="ratioOptions">
+                    <input type="radio" id="optionHD" name="imageStyle" value="HD" checked="checked"  tabindex="6">
+                    <label for="optionHD">HD</label>
+                    <input type="radio" id="option43" name="imageStyle" value="43" tabindex="6">
+                    <label for="option43">4:3</label>
+                    <div id="ratioTooltip">Leave the ratio as HD by default.  ONLY choose 4:3 if you are using the lower ratio video in Zoom and your name is being cut off.</div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div id="imgs"></div>
+        <div id="explanation" style="display:none"></div>
+        <a id="downloadlink" download="zoombackground.jpg" href="">Download Background</a>
+        <p><small><em>*If you need a different pronoun other than what is featured here, please <a href="mailto:newstudents@johnson.cornell.edu">send us an email</a>.</em></small></p>
+        <h2>Optimize Your Use</h2>
+        <ul>
+            <li>Preview your video in <a href="https://cornell.zoom.us/" target="_blank">Cornell Zoom</a> and adjust your position to avoid obscuring your first name</li>
+            <li>Use the "mirror" option if you don’t want to see your name in reverse (but rest assured--it will always display correctly to others).</li>
+            <li>Avoid backlighting (no lights or windows behind your chair). A window or at least a light behind your monitor (in front of your face) works best</li>
+        </ul>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
