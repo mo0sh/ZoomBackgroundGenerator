@@ -55,6 +55,7 @@ var Canvas2Image = function () {
 	function genImage(strData) {
 		var img = document.createElement('img');
 		img.src = strData;
+    img.setAttribute("alt", "");
 		return img;
 	}
 	function fixType (type) {

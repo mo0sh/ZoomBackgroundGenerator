@@ -1,201 +1,128 @@
 let canvas, canvashd, ctxorig, ctxhd, $createimage, $optionHD, $option43, $imgs,
-    $logo, $logoLoaded, $first, $last, $pronouns, $radialParm, $cohort, $school;
+    $first, $last, $pronouns, $radialParm, $optionSimple, $option75;
 
 // Initialize variable references and load assets
 function init () {
-    canvas = document.getElementById("cvs");
-    canvashd = document.getElementById("cvshd");
+  canvas = document.getElementById("cvs");
+  canvashd = document.getElementById("cvshd");
 
-    ctxorig = canvas.getContext("2d");
-    ctxhd = canvashd.getContext("2d");
+  ctxorig = canvas.getContext("2d");
+  ctxhd = canvashd.getContext("2d");
 
-    $createimage = document.getElementById("createimage");
-    $optionHD = document.getElementById("optionHD");
-    $option43 = document.getElementById("option43");
+  $createimage = document.getElementById("createimage");
+  $optionHD = document.getElementById("optionHD");
+  $option43 = document.getElementById("option43");
 
-    $imgs = document.getElementById("imgs");
+  $optionSimple = document.getElementById("optionSimple");
+  $option75 = document.getElementById("option75");
 
-    $first =document.getElementById("first");
-    $last = document.getElementById("last");
-    $pronouns = document.getElementById("pronouns");
-    $school = document.getElementById("school");
-    $cohort = document.getElementById("cohort");
+  $imgs = document.getElementById("imgs");
 
-    $logoLoaded = false;
-    $logo = new Image();
-    $logo.onload = function() {
-        $logoLoaded = true;
-        update();
-    }
-    $logo.src= "img/cornell_seal_simple_white.svg";
+  $first =document.getElementById("first");
+  $last = document.getElementById("last");
+  $pronouns = document.getElementById("pronouns");
 
-    let queryString = window.location.search;
-    let urlParams = new URLSearchParams(queryString);
-    let firstVal  = urlParams.get('first');
-    let lastVal = urlParams.get('last');
-    let pronounsVal = urlParams.get('pronouns');
-    let schoolsVal = urlParams.get('school');
-    let cohortVal = urlParams.get('cohort');
+  $bgImgHD = document.getElementById("bgImgHD");
+  $bgImg43 = document.getElementById("bgImg43");
+  $bgImgHD75 = document.getElementById("bgImgHD75");
+  $bgImg4375 = document.getElementById("bgImg4375");
+  $activeImg = $bgImgHD;
 
-    $radialParm = urlParams.get('r');
+  let queryString = window.location.search;
+  let urlParams = new URLSearchParams(queryString);
+  let firstVal  = urlParams.get('first');
+  let lastVal = urlParams.get('last');
+  let pronounsVal = urlParams.get('pronouns');
+  let schoolsVal = urlParams.get('school');
+  let cohortVal = urlParams.get('cohort');
+  let fill_effect = urlParams.get('fill_effect');
 
-    if (firstVal) { $first.value = firstVal }
-    if (lastVal) { $last.value = lastVal }
-    if (pronounsVal) { $pronouns.value = pronounsVal }
-    if (schoolsVal) { $school.value = schoolsVal }
-    if (cohortVal) { $cohort.value = cohortVal }
+  $radialParm = urlParams.get('r');
 
-    bind();
-    update();
+  if (firstVal) { $first.value = firstVal }
+  if (lastVal) { $last.value = lastVal }
+  if (pronounsVal) { $pronouns.value = pronounsVal }
+  if (schoolsVal) { $school.value = schoolsVal }
+  if (cohortVal) { $cohort.value = cohortVal }
+
+  bind();
+  update();
 }
 
 // Draw the HD version of the canvas
 function drawHD(){
-    draw(ctxhd, 1920, 1080);
-    document.getElementById("explanation").style.display = "block";
-
-    let type = 'jpg',
-        w = 1920,
-        h = 1080;
-    $imgs.innerHTML = '';
-    $imgs.appendChild(Canvas2Image.convertToImage(canvashd, w, h, type))
+  $activeImg = (optionSimple.checked) ? $bgImgHD : $bgImgHD75;
+  renderBackground(ctxhd, canvashd, 1920, 1080);
 }
 
 // Draw the 4:3 version of the canvas
 function draw43(){
-    draw(ctxorig, 1600, 1200);
-    document.getElementById("explanation").style.display ="block";
-
-    let type = 'jpg',
-        w = 1600,
-        h = 1200;
-    $imgs.innerHTML = '';
-    $imgs.appendChild(Canvas2Image.convertToImage(canvas, w, h, type))
+  $activeImg = (optionSimple.checked) ? $bgImg43 : $bgImg4375;
+  renderBackground(ctxorig, canvas, 1600, 1200);
 }
 
-// Trigger on any update to the form. This will adjust controls as necessary and re-render the image
-function update() {
-    // Hide/show controls
-    let cohortRow = document.getElementById("cohortRow");
-
-    if($school.value === "JOHNSON") {
-        cohortRow.style.display = "table-row";
-    } else {
-        cohortRow.style.display = "none";
-        $cohort.value = "none";
-    }
-
-    // Update image
-    updateImage();
+function renderBackground(context, canvasObj, w, h, type='jpg') {
+  draw(context, w, h);
+  document.getElementById("explanation").style.display ="block";
+  $imgs.innerHTML = '';
+  $imgs.appendChild(Canvas2Image.convertToImage(canvasObj, w, h, type))
 }
 
 // Update the image based on the selected format
-function updateImage(){
-    if ($optionHD.checked){
-        drawHD();
-    }else{
-        draw43();
-    }
-
+function update() {
+  ($optionHD.checked) ? drawHD() : draw43();
 }
 
 // Bind the update and render functions to form controls
 function bind () {
-    // Set up the "Save Image" button
-    $createimage.onclick = function() {
-        updateImage();
-        if ($optionHD.checked){
-            Canvas2Image.saveAsImage(canvashd, 1920, 1080, 'jpg');
-        }else {
-            Canvas2Image.saveAsImage(canvas, 1600, 1200, 'jpg');
-
-        }
+  // Set up the "Save Image" button
+  $createimage.onclick = function() {
+    update();
+    if ($optionHD.checked){
+      Canvas2Image.saveAsImage(canvashd, 1920, 1080, 'jpg');
+    } else {
+      Canvas2Image.saveAsImage(canvas, 1600, 1200, 'jpg');
     }
+  }
 
-    // Connect the update method to form controls
-    $last.oninput = update;
-    $first.oninput = update;
-    $pronouns.oninput = update;
-    $school.onchange = update;
-    $cohort.onchange = update;
-    $option43.oninput = update;
-    $optionHD.oninput = update;
+  // Connect the update method to form controls
+  $last.oninput = update;
+  $first.oninput = update;
+  $pronouns.oninput = update;
+  $option43.oninput = update;
+  $optionHD.oninput = update;
+  $optionSimple.oninput = update;
+  $option75.oninput = update;
 }
 
-// Draw the canvas
 function draw(ctx, w, h) {
-    let radialGrd = ctx.createRadialGradient(w / 2, h / 2, 50, w / 2, h / 2, h);
-    radialGrd.addColorStop(0, "#AAA");
-    radialGrd.addColorStop(1, "#000");
+  var pat = ctx.createPattern($activeImg, "repeat");
+  ctx.fillStyle = pat;
+  ctx.fillRect(0,0,w,h);
 
-    // ctx.fillStyle = '#B31B1B';
-    ctx.fillStyle = radialGrd;
-    ctx.fillRect(0,0,w,h);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = "bold 150px Replica";
 
-    if($logoLoaded) {
-        ctx.fillStyle = '#ffffff';
-        ctx.font = "bold 150px Arial";
+  let rightMargin = 50;
+  let topMargin = 50;
+  let verticalLineWidth = 0;
 
-        let rightMargin = 50;
-        let topMargin = 50;
-        let verticalLineWidth = $cohort.value === "none" ? 0 : 60;
+  let firstLineBase = 160;
+  let secondLineBase = 280;
+  let thirdLineBase = 360;
 
-        let firstLineBase = 160;
-        let secondLineBase = 280;
-        let thirdLineBase = 360;
+  let logoHeight = 150;
+  let logoWidth = 150;
 
-        let logoHeight = 150;
-        let logoWidth = 150;
+  ctx.textAlign = "left";
+  ctx.font = "bold 150px Replica";
+  ctx.fillText($first.value, 50 + verticalLineWidth, firstLineBase);
 
-        ctx.textAlign = "left";
-        ctx.font = "bold 150px Arial";
-        ctx.fillText($first.value, 50 + verticalLineWidth, firstLineBase);
+  ctx.font = "bold 125px Replica";
+  ctx.fillText($last.value, 50 + verticalLineWidth, secondLineBase, 600);
 
-        ctx.font = "bold 100px Arial";
-        ctx.fillText($last.value, 50 + verticalLineWidth, secondLineBase);
-
-        ctx.font = "normal 50px Arial"
-        ctx.fillText($pronouns.value, 50 + verticalLineWidth, thirdLineBase);
-
-        // Add a vertical school name to the right side if selected
-        if($school.value !== "") {
-            ctx.save();
-            ctx.font = "normal 150px Arial"
-            ctx.textAlign = "left";
-            ctx.translate(w - 70, (h - (logoHeight + 123)));
-            ctx.rotate(-Math.PI / 2);
-            ctx.letterSpacing = '10px';
-            ctx.fillText($school.value, 0, 0);
-            ctx.restore();
-        }
-
-        // Fill out the Cohort border if an option is selected
-        if ($cohort.value !== "none") {
-            ctx.fillStyle = $cohort.value;
-            ctx.fillRect(0, 0, verticalLineWidth, h);
-
-            let cohortName = $cohort.selectedOptions[0].innerHTML;
-            ctx.save();
-            ctx.fillStyle = '#ffffff';
-            ctx.font = "bold 40px Arial"
-            ctx.textAlign = "right";
-            ctx.translate(45, 50);
-            ctx.rotate(-Math.PI / 2);
-            ctx.fillText(cohortName.toUpperCase(), 0, 0, 300);
-            ctx.restore();
-        } else {
-            // Red bar on right side
-            ctx.fillStyle = '#B31B1B';
-            ctx.fillRect(w - 20, 0, 20, h);
-        }
-
-        ctx.drawImage($logo, w - (rightMargin + logoWidth), h - (topMargin + logoHeight), logoWidth, logoHeight);
-    } else {
-        ctx.fillStyle = '#ffffff';
-        ctx.font = "bold 150px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("Loading...", w/2, h/2);
-    }
+  ctx.font = "normal 50px Replica"
+  ctx.fillText($pronouns.value, 50 + verticalLineWidth, thirdLineBase);
 }
 
 onload = init;
