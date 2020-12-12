@@ -38,6 +38,7 @@ button, .button {
     width: auto;
     white-space: nowrap;
     display: inline-block;
+    margin: 10px 0;
 }
 button.default:hover, button:hover, .button:hover {
     background: #F8981D;
@@ -99,7 +100,7 @@ h1 {
 }
 
 #imgs {
-    margin-left: 100px;
+    /*margin-left: 100px;*/
     min-height: 342px;
 }
 #imgs img {
@@ -118,7 +119,6 @@ h1 {
 }
 #canvasContainer {
   /*  grid-column: 3;*/
-    text-align: right;
     padding: 8px 3px;
 }
 
