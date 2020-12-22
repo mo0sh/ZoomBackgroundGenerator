@@ -32,14 +32,25 @@
             <option value="They/Them">They/Them</option>
           </select>
         </fieldset>
+        <fieldset role="radiogroup" aria-labelledby="choose_background">
+          <legend id="choose_background">Choose a background</legend>
+          <label for="optionGradient">
+            <input type="radio" id="optionGradient" name="background_choice" value="Gradient"  tabindex="4">
+            Simple Gradient
+          </label>
+          <label for="optionTextured">
+            <input type="radio" id="optionTextured" name="background_choice" value="tiled" checked="checked" tabindex="5">
+            Tiled 75 pattern
+          </label>
+        </fieldset>
         <fieldset role="radiogroup" aria-labelledby="choose_logo">
           <legend id="choose_logo">Choose an ILR logo</legend>
           <label for="optionSimple">
-            <input type="radio" id="optionSimple" name="logo_choice" value="Simple" checked="checked"  tabindex="4">
-            Simple
+            <input type="radio" id="optionSimple" name="logo_choice" value="Simple" checked="checked"  tabindex="6">
+            ILR School
           </label>
           <label for="option75">
-            <input type="radio" id="option75" name="logo_choice" value="75" tabindex="5">
+            <input type="radio" id="option75" name="logo_choice" value="75" tabindex="7">
             75th anniversary
           </label>
         </fieldset>
@@ -47,11 +58,11 @@
           <legend id="video_format">Match your Zoom video format</legend>
           <div id="ratioOptions">
             <label for="optionHD">
-              <input type="radio" id="optionHD" name="imageStyle" value="HD" checked="checked"  tabindex="6">
+              <input type="radio" id="optionHD" name="imageStyle" value="HD" checked="checked"  tabindex="8">
               HD
             </label>
             <label for="option43">
-              <input type="radio" id="option43" name="imageStyle" value="43" tabindex="7">
+              <input type="radio" id="option43" name="imageStyle" value="43" tabindex="9">
               4:3
             </label>
             <p><small><em>Leave the ratio as HD by default.  <br>Choose 4:3 <strong>only</strong> if you are using the lower ratio video in Zoom and your name is being cut off.</em></small></p>
@@ -62,7 +73,7 @@
         <div id="imgs"></div>
         <div id="explanation" style="display:none"></div>
         <a id="downloadlink" download="ilr-zoom-background.jpg" href="">Download Background</a><br>
-        <button id="createimage" tabindex="8">Save Image</button>
+        <button id="createimage" tabindex="10">Save Image</button>
       </div>
     </div>
   </div>
@@ -70,6 +81,10 @@
   <img id="bgImg43" src="img/bg_1200x1600.png" style="display: none;" alt="">
   <img id="bgImgHD75" src="img/75_bg_HD.png" style="display: none;" alt="">
   <img id="bgImg4375" src="img/75_bg_1200x1600.png" style="display: none;" alt="">
+  <img id="grad_bgImgHD" src="img/grad_bg_HD.png" style="display: none;" alt="">
+  <img id="grad_bgImg43" src="img/grad_bg_1200x1600.png" style="display: none;" alt="">
+  <img id="grad_bgImgHD75" src="img/grad_75_bg_HD.png" style="display: none;" alt="">
+  <img id="grad_bgImg4375" src="img/grad_75_bg_1200x1600.png" style="display: none;" alt="">
   <script src="js/main.js"></script>
 </body>
 </html>
